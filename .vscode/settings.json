@@ -1,0 +1,14 @@
+{
+    "editor.tabSize": 4,
+    "editor.detectIndentation": false,
+    "editor.rulers": [120],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true
+    },
+    "black-formatter.args": [
+        "-S",             // forces to not replace the single quote.
+        "--line-length",
+        "120"
+    ],
+}
