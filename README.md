@@ -53,7 +53,7 @@ without re-building the docker images. The only exception to this is when making
 
 Aside from Docker Compose, the project can be run with `virtualenv` and `python3`. It just requires the following
 configuration. This is also recommended for making additional changes to the project, including managing additional
-dependencies:
+dependencies.
 
 Make sure [python3](https://www.python.org/) and [virtualenv](https://virtualenv.pypa.io/en/latest/) are installed
 locally. Then, set up your environment. From the top-level directory:
@@ -90,8 +90,13 @@ Finally, to run the server:
 
 ### Adding new dependencies
 
-To add new dependencies, first install the dependencies in your virtual environment using `pip`. Then run the following
-command to save the new dependencies in `requirements.txt`:
+To add new dependencies, first install the dependencies in your virtual environment using `pip`:
+
+```
+(venv) pip install <package>
+```
+
+Then run the following command to save the new dependencies in `requirements.txt`:
 
 ```
 (venv) pip freeze > requirements.txt
@@ -100,12 +105,13 @@ command to save the new dependencies in `requirements.txt`:
 ## Client
 
 The client code, written primarily in Typescript, resides in the `client/` directory and follows the convention for
-Vite React projects. The `pnpm` package manager is used to in lieu of `npm` due to its optimizations.
+[Vite](https://vitejs.dev/) React projects. The `pnpm` package manager is used to in lieu of `npm` due to its
+optimizations.
 
 The following major libraries are used in the front-end code:
  - Node v20
  - `react` v18
- - `@mui/material` v5
+ - `@mui/material` v6
  - `react-redux`
  - `@reduxjs/toolkit` (aka RTK)
  - `react-hook-forms`
