@@ -1,5 +1,5 @@
 /**
- * Configure the application here, using .env files to set environment variables.
+ * Configure the application here, such as path to server API.
  */
 
 const config = {
