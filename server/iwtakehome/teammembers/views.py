@@ -7,7 +7,7 @@ from .serializers import TeamMemberSerializer
 
 
 class TeamMemberViewSet(viewsets.ModelViewSet):
-    queryset = TeamMember.objects.all()
+    queryset = TeamMember.objects.all().order_by('created_at')
     serializer_class = TeamMemberSerializer
     # Note: The exercise did not specify authentication, so we're allowing any user access to this. But in a production
     # environment, we would obviously require authentication.
