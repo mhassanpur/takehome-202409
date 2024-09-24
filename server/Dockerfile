@@ -16,11 +16,5 @@ COPY . /app
 # Expose the port
 EXPOSE 8000
 
-# Run the migrations
-RUN python manage.py migrate
-
-# Seed the database
-RUN python manage.py loaddata fixtures/data.json
-
-# Run the application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Bootstrap and run the application
+ENTRYPOINT [ "/bin/bash", ".docker/init.sh" ]
