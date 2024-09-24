@@ -27,7 +27,7 @@ function IndexPage() {
     const limit = 10;
     const offset = (page - 1) * limit;
     const { data, error, isLoading } = useGetTeamMembersQuery({ limit: limit, offset: offset });
-    
+
     // Calculate pagination values
     const totalMembers = data?.count;
     const totalPages = totalMembers ? Math.ceil(totalMembers / limit) : 1;
@@ -89,11 +89,20 @@ function IndexPage() {
         </Grid>
     )
 
+    let subtitle = "You have no team members yet.";
+    if (totalMembers) {
+        if (totalMembers > 1) {
+            subtitle = `You have ${totalMembers} team members.`;
+        }
+        else {
+            subtitle = "You have 1 team member.";
+        }
+    }
     return (
         <Container>
             <Header
                 title={'Team members'}
-                subtitle={`You have ${totalMembers} team members.`}
+                subtitle={subtitle}
                 buttonIcon={<Add />}
                 onButtonClick={onClickAdd}
             />
