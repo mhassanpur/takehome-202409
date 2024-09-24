@@ -14,6 +14,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
+import ConfirmationDialog from "../components/ConfirmationDialog";
 import Header from "../components/Header";
 import { 
     useDeleteTeamMemberMutation, 
@@ -22,7 +23,7 @@ import {
 } from "../services/teamMembers";
 import { useNavigate, useParams } from "react-router-dom";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -74,6 +75,7 @@ const formSectionStyle = {
 function EditPage() {
     const navigate = useNavigate();
     const params = useParams();
+    const [confirmDeletion, setConfirmDeletion] = useState(false);
     const { isLoading: isFetching, error: fetchError, data: teamMember } = useGetTeamMemberQuery(params.id as string);
     const [
         postUpdate,
@@ -119,10 +121,46 @@ function EditPage() {
         errorMessage = "Error: Unable to delete team member!";
     }
 
-    // Handle delete button click
+    // Form: Clicking delete
     const onClickDelete = () => {
+        //postDelete(params.id as string);
+        setConfirmDeletion(true);
+    }
+
+    // Delete confirmation: Clicking confirm
+    const onConfirmDelete = () => {
+        setConfirmDeletion(false); // clear dialog box
         postDelete(params.id as string);
     }
+
+    // Delete confirmation: Clicking cancel
+    const onCancelDelete = () => {
+        setConfirmDeletion(false);
+    }
+
+    // Delete confirmation dialog box
+    const deleteConfirmationDialog = (
+        <ConfirmationDialog
+            open={confirmDeletion}
+            title="Confirm Delete"
+            message={(
+                <>
+                    Are you sure you want to delete the user:&nbsp;
+                    <strong>{teamMember?.firstName} {teamMember?.lastName}</strong>?
+                </>
+            )}
+            cancelButton={
+                <Button onClick={onCancelDelete} color="primary" variant="outlined">
+                    Cancel
+                </Button>
+            }
+            confirmButton={
+                <Button onClick={onConfirmDelete} color="error" variant="contained">
+                    Delete
+                </Button>
+            }
+        />
+    );
 
     // Redirect to the index page after saving/deleting the team member
     useEffect(() => {
@@ -188,6 +226,7 @@ function EditPage() {
     // Use react-hook-form to create a form using MUI components
     return (
         <Container>
+            {deleteConfirmationDialog}
             <Header title="Edit team member" subtitle="Edit contact info, location, and role." />
             <form onSubmit={handleSubmit(onSubmit)} style={formStyle}>
                 <Grid container direction={'column'} spacing={2} justifyContent={'center'}>
